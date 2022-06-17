@@ -1,8 +1,8 @@
-### What is where
+### What is where ?
 
 [Background info](#background-info)
 
-[Background info ](#write-the-following-in-the-terminal-at-the-begining-of-the-project)
+[Starting the project](#write-the-following-in-the-terminal-at-the-begining-of-the-project)
 
 [Font awesome icons](#font-awesome-icons)
 
