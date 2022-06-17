@@ -39,7 +39,7 @@ import { FaAngleUp } from "react-icons/fa";
 <BsEmojiSmile/>
 ```
 
-[link to other options](https://react-icons.github.io/react-icons/icons?name=fa)
+[link to a million other options](https://react-icons.github.io/react-icons/icons?name=fa)
 
 
 ## Loading icons
@@ -119,14 +119,14 @@ npm i react-router-dom
 // this goes in the main.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// this goes inside the render
+// this goes inside the render 
+// the app route goes around all others, that way everything on the App component gets shown no matter what site you are on
 <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />}>
-      // the app route goes around all others, that way everything on the App component gets shown no matter what site you are on
         <Route path="site" element={<SomeComponent />}></Route>
         <Route path="anotherSite" element={<SomeOtherComponent />}></Route>
-      </Route>// this is the closing tag for the App
+      </Route>
       <Route
         // default for when the link is wrong
         // like this http://localhost:3000/hjklhjklh
@@ -158,7 +158,7 @@ import { Outlet, Link } from "react-router-dom";
 <Outlet />
 ```
 
-
+[I'm a reference-style link][Using routes]
 
 
 
