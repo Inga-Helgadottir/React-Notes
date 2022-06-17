@@ -32,11 +32,12 @@ import { FaAngleUp } from "react-icons/fa";
 
 #### Some of the options
 
+```javascript
 <FaAngleDown />
 <FaAngleUp />
 <GiHamburgerMenu/>
 <BsEmojiSmile/>
-
+```
 
 [link to other options](https://react-icons.github.io/react-icons/icons?name=fa)
 
