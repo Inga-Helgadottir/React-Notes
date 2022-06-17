@@ -158,7 +158,7 @@ import { Outlet, Link } from "react-router-dom";
 <Outlet />
 ```
 
-[I'm a reference-style link][Using routes]
+[I'm a reference-style link](#routes)
 
 
 
