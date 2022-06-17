@@ -1,3 +1,17 @@
+### What is where
+
+[Background info](#background-info)
+
+[Background info ](#write-the-following-in-the-terminal-at-the-begining-of-the-project)
+
+[Font awesome icons](#font-awesome-icons)
+
+[Loading icons](#loading-icons)
+
+[Proptypes](#proptypes)
+
+[Routes](#routes)
+
 # Background info
 
 .prettierignore - stops prettier from changing this readme file
@@ -157,8 +171,6 @@ import { Outlet, Link } from "react-router-dom";
 </nav>
 <Outlet />
 ```
-
-[I'm a reference-style link](#routes)
 
 
 
