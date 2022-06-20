@@ -14,21 +14,14 @@ function App() {
   //this is for login
   const [userName, setUserName] = useState("");
   const [userRole, setUserRole] = useState("");
-  const [oneRole, setOneRole] = useState("");
+  const [oneRole, setOneRole] = useState(false);
   const [loggedIn, setLoggedIn] = useState("");
 
   useEffect(() => {
     if (loggedIn === "") {
       let userNameLS = localStorage.getItem("userName");
       let loggedInLS = localStorage.getItem("loggedIn");
-      let userRoleLS;
-
-      // if (oneRole === true) {
-      userRoleLS = localStorage.getItem("userRole");
-      console.log(userRoleLS);
-      // } else {
-      //   userRoleLS = JSON.parse(localStorage.getItem("userRole"));
-      // }
+      let userRoleLS = JSON.parse(localStorage.getItem("userRole"));
 
       setUserName(userNameLS);
       setLoggedIn(loggedInLS);
@@ -53,7 +46,6 @@ function App() {
   };
 
   const logInFunc = async (user) => {
-    console.log(JSON.stringify(user));
     const res = await fetch(loginUrl, {
       method: "POST",
       headers: {
@@ -75,20 +67,11 @@ function App() {
       data.username !== undefined
     ) {
       setUserName(data.username);
-      if (
-        data.role1 !== null &&
-        data.role1 !== "" &&
-        data.role1 !== undefined
-      ) {
-        let roleArray = [data.role0, data.role1];
-        setUserRole(data.role0, data.role1);
-        localStorage.setItem("userRole", JSON.stringify(roleArray));
-        setOneRole(false);
-      } else {
-        setUserRole(data.role0);
-        localStorage.setItem("userRole", data.role0);
-        setOneRole(true);
-      }
+      setUserRole(data.role0);
+      let roleArray = [data.role0, data.role1];
+      setUserRole(data.role0, data.role1);
+      localStorage.setItem("userRole", JSON.stringify(roleArray));
+
       setLoggedIn(true);
       localStorage.setItem("userName", data.username);
       localStorage.setItem("loggedIn", true);
@@ -136,7 +119,6 @@ function App() {
       setLoggedIn(true);
       localStorage.setItem("userName", data.username);
       localStorage.setItem("loggedIn", true);
-      checkAfterHalfAnHour(data.token);
       localStorage.setItem("token", data.token);
       window.location.reload();
     }
