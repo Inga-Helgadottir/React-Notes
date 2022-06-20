@@ -22,6 +22,10 @@
 
 [Filter](#filter)
 
+[Forms](#forms)
+
+[Fetch](#fetch)
+
 # Background info
 
 .prettierignore - stops prettier from changing this readme file
@@ -147,6 +151,8 @@ ComponentName.propTypes = {
 }
 ```
 
+***
+
 ## Routes
 
 npm i react-router-dom
@@ -195,6 +201,9 @@ import { Outlet, Link } from "react-router-dom";
 </nav>
 <Outlet />
 ```
+
+***
+
 ## UseState
 
 ```javascript
@@ -204,6 +213,7 @@ import { useState } from "react";
 const [getter, setter] = useState(false);
 const [getter, setter] = useState([]); 
 const [getter, setter] = useState(""); 
+const [getter, setter] = useState({}); 
 
 // above render and below useStates
 setter(set the value here)
@@ -217,9 +227,10 @@ getter.push(new value)
 // this is for show hide (only works with a boolean)
 <button onClick={(e) => {
     setter(!getter); 
-}}>button</button>
+}}>button name</button>
 ```
 
+***
 ## UseEffect
 
 ```javascript
@@ -250,6 +261,8 @@ useEffect(() => {
 }, [prop, state]);
 ```
 
+***
+
 ## If else
 
 ```javascript
@@ -276,17 +289,19 @@ useEffect(() => {
 )}
 ```
 
-
+***
 ## Map
 
 ```javascript
 {someList.length > 0 &&
     someList.map((element, index) => {
+      // always put a key element on mapped objects
         return <SingleItemInListComponent key={index} props={element} />;
     })
 }
 ```
 
+***
 ## Filter
 
 ```javascript
@@ -306,24 +321,15 @@ function checkAdult(age) {
 }
 ```
 
-## FETCH
-
-### Create
-
-### Read
-
-### Update
-
-### Delete
-
-
+***
 ## Forms
 
 ```html
 <form onSubmit={onSubmitFunction}>
-    <div className="form-control"> <!-- it is best to wrap input and label in a div, it makes it easier to make it pretty in css -->
+    <div className="form-control"> 
+      <!-- it is best to wrap input and label in a div, it makes it easier to make it pretty in css -->
         <label for="fname">First name:</label>
-        <input type="text" id="fname" name="fname"> 
+        <input type="text" id="fname" name="fname" placeholder="what it should say if empty"> 
     </div>
 </form>
 ```
@@ -342,4 +348,153 @@ function checkAdult(age) {
 <input type="hidden">
 <input type="radio">
 <input type="submit">
+
+<textarea name="message" rows="10" cols="30"></textarea>
+
+<select id="cars" name="cars">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+</select>
+```
+
+***
+## FETCH
+
+### Create
+
+make a useState for everything that should go in the Entity class
+
+```javascript
+const makeFunc = async (newThing) => {
+  const res = await fetch(makeThingUrl, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(newThing),
+  });
+  const data = await res.json();
+};
+
+const onSubmit = (e) => {
+  e.preventDefault();
+  let thing = {
+    // here you put the names of all the useState elementslike this
+    name, 
+    otherElement,
+  };
+  // make one of these for all elements that should not be null
+  if (!name) {
+    alert("Please enter a name");
+    return;
+  }
+  makeFunc(thing);
+  // do this for all the elements
+  setName("");
+  // if its an array
+  setName([]);
+};
+
+// in the render you need a form that calls the submit function
+<form onSubmit={onSubmit}>
+  <input
+    type="text"
+    placeholder="Name"
+    // on each input the value should be the name of the useState
+    value={name}
+    // each input should have an onChange like this
+    onChange={(e) => setName(e.target.value)}
+  ></input>
+  // the submit button has to be an input with the type submit
+  // the value is the text inside the button
+  <input type="submit" value="Make your thing" />
+</form>
+```
+
+### Read
+
+```javascript
+import { urlFromSettings } from "../settings";
+
+const [listOfStuff, setListOfStuff] = useState([]);
+
+useEffect(() => {
+  const getStuff = async () => {
+    const fromAPI = await getListFromEndpoint();
+    // if you need to get something by id or name or whatever
+    const fromAPI = await getListFromEndpoint(id);
+    setCocktailsList(fromAPI);
+  };
+  getStuff();
+}, []);
+
+const getListFromEndpoint = async (id) => {
+  const res = await fetch(urlFromSettings);
+    // if you need to get something by id
+  const res = await fetch(urlFromSettings + id);
+  const data = await res.json();
+  return data.drinks;
+};
+
+// then you map it in the render and best to send it to a component with the info
+{listOfStuff.length > 0 &&
+  listOfStuff.map((element, index) => {
+    return <Stuff key={index} props={element} />;
+})}
+```
+
+### Update
+
+for an update you need a way to get the correct Entity to update
+
+- you can put a checkbox on the elements from see all and get the id from there
+
+- you can make an endpoint for get by id or get by name and use that to change it
+
+- you can also have an input that takes a number and you update that
+
+other than that its mostly the same as create on the front-end with the form and function side, the only read difference is the method is PUT instead of POST
+
+```javascript
+const updateFunc = async (newThing) => {
+  const res = await fetch(updateThingUrl, {
+    method: "PUT",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(newThing),
+  });
+  const data = await res.json();
+};
+
+// you can also use the placeholder to show the current
+<input placeholder={currentValue}>
+```
+
+### Delete
+
+here you also need a way to get the id, you have the same options as update
+
+```javascript
+const deleteFunc = async (id) => {
+  await fetch(deleteThingUrl + id, {
+      method: "DELETE",
+  });
+};
+```
+
+### do stuff with admin access
+
+```javascript
+const getSomeAdminThing = async () => {
+  // you need to set the token to localStorage in the login and signup functions
+  let token = localStorage.getItem("token");
+  const res = await fetch(getSomeAdminThingUrl, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      "x-access-token": token,
+    },
+  });
+}
 ```

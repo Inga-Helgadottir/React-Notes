@@ -2,6 +2,7 @@ import React from "react";
 import { readUrl } from "../settings";
 import { useState, useEffect } from "react";
 import FetchReadJr from "./FetchReadJr";
+import LoadingIcons from "react-loading-icons";
 
 const FetchRead = () => {
   const [manySideList, setManySideList] = useState([]);
@@ -15,21 +16,23 @@ const FetchRead = () => {
   }, []);
 
   const getManySides = async () => {
-    // document.querySelector(".loading").style.display = "block";
+    document.querySelector(".loading").style.display = "block";
     const res = await fetch(readUrl);
     const data = await res.json();
-    // document.querySelector(".loading").style.display = "none";
-    // console.log("data");
-    // console.log(data);
+    document.querySelector(".loading").style.display = "none";
     return data;
   };
 
   return (
     <div>
-      {manySideList.length > 0 &&
+      <LoadingIcons.ThreeDots className="loading" />
+      {manySideList.length > 0 ? (
         manySideList.map((element, index) => {
           return <FetchReadJr key={index} props={element} />;
-        })}
+        })
+      ) : (
+        <h2>There are no many sides</h2>
+      )}
     </div>
   );
 };
