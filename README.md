@@ -67,7 +67,7 @@ import { FaAngleUp } from "react-icons/fa";
 <BsEmojiSmile/>
 ```
 
-[link to a million other options](https://react-icons.github.io/react-icons/icons?name=fa)
+[link to a million other options](https://react-icons.github.io/react-icons/icons?name=fa){:target="_blank"}
 
 
 ## Loading icons
