@@ -3,8 +3,9 @@ import "./styles/nav.css";
 import "./styles/header.css";
 import { Outlet, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { loginUrl } from "./settings";
+import { loginUrl, getAsAdminUrl } from "./settings";
 import LogIn from "./Components/Login";
+import LogOut from "./Components/LogOut";
 import SignUp from "./Components/SignUp";
 
 function App() {
@@ -13,13 +14,21 @@ function App() {
   //this is for login
   const [userName, setUserName] = useState("");
   const [userRole, setUserRole] = useState("");
+  const [oneRole, setOneRole] = useState("");
   const [loggedIn, setLoggedIn] = useState("");
 
   useEffect(() => {
     if (loggedIn === "") {
       let userNameLS = localStorage.getItem("userName");
       let loggedInLS = localStorage.getItem("loggedIn");
-      let userRoleLS = JSON.parse(localStorage.getItem("userRole"));
+      let userRoleLS;
+
+      // if (oneRole === true) {
+      userRoleLS = localStorage.getItem("userRole");
+      console.log(userRoleLS);
+      // } else {
+      //   userRoleLS = JSON.parse(localStorage.getItem("userRole"));
+      // }
 
       setUserName(userNameLS);
       setLoggedIn(loggedInLS);
@@ -27,7 +36,24 @@ function App() {
     }
   });
 
+  const testingAdminGet = async () => {
+    let token = localStorage.getItem("token");
+    const res = await fetch(getAsAdminUrl, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        "x-access-token": token,
+      },
+    });
+    const data = await res.json();
+    console.log("data");
+    console.log(data);
+    document.querySelector("#adminTestResponse").innerHTML =
+      "did admin test work? : " + data.admin;
+  };
+
   const logInFunc = async (user) => {
+    console.log(JSON.stringify(user));
     const res = await fetch(loginUrl, {
       method: "POST",
       headers: {
@@ -57,14 +83,15 @@ function App() {
         let roleArray = [data.role0, data.role1];
         setUserRole(data.role0, data.role1);
         localStorage.setItem("userRole", JSON.stringify(roleArray));
+        setOneRole(false);
       } else {
         setUserRole(data.role0);
         localStorage.setItem("userRole", data.role0);
+        setOneRole(true);
       }
       setLoggedIn(true);
       localStorage.setItem("userName", data.username);
       localStorage.setItem("loggedIn", true);
-      checkAfterHalfAnHour(data.token);
       localStorage.setItem("token", data.token);
       window.location.reload();
     }
@@ -92,11 +119,20 @@ function App() {
       data.username !== undefined
     ) {
       setUserName(data.username);
-      setUserRole(data.role0);
-      let roleArray = [data.role0, data.role1];
-      setUserRole(data.role0, data.role1);
-      localStorage.setItem("userRole", JSON.stringify(roleArray));
-
+      if (
+        data.role1 !== null &&
+        data.role1 !== "" &&
+        data.role1 !== undefined
+      ) {
+        let roleArray = [data.role0, data.role1];
+        setUserRole(data.role0, data.role1);
+        localStorage.setItem("userRole", JSON.stringify(roleArray));
+        setOneRole(false);
+      } else {
+        setUserRole(data.role0);
+        localStorage.setItem("userRole", data.role0);
+        setOneRole(true);
+      }
       setLoggedIn(true);
       localStorage.setItem("userName", data.username);
       localStorage.setItem("loggedIn", true);
@@ -110,7 +146,6 @@ function App() {
     setLoggedIn(false);
     setUserName("");
     setUserRole("");
-    setCallLinkCheck(false);
     localStorage.clear();
     window.location.href = "/";
   };
@@ -131,30 +166,49 @@ function App() {
       <Outlet />
 
       {showHide && <p style={{ margin: "5px" }}>this is a show hide</p>}
-
-      <button
-        style={
-          showHide
-            ? {
-                backgroundColor: "red",
-                border: "solid 2px black",
-                margin: "10px 0",
-                padding: "5px",
-              }
-            : {
-                backgroundColor: "greenyellow",
-                border: "solid 2px green",
-                margin: "10px 0",
-                padding: "5px",
-              }
-        }
-        onClick={(e) => {
-          setShowHide(!showHide);
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "20%",
+          margin: "0 auto",
         }}
       >
-        {showHide ? "hide content" : "show content"}
-      </button>
-
+        <button
+          style={
+            showHide
+              ? {
+                  backgroundColor: "red",
+                  border: "solid 2px black",
+                  margin: "10px 0",
+                  padding: "5px",
+                }
+              : {
+                  backgroundColor: "greenyellow",
+                  border: "solid 2px green",
+                  margin: "10px 0",
+                  padding: "5px",
+                }
+          }
+          onClick={(e) => {
+            setShowHide(!showHide);
+          }}
+        >
+          {showHide ? "hide content" : "show content"}
+        </button>
+        {userRole !== null &&
+          userRole !== undefined &&
+          userRole.includes("admin") && (
+            <button
+              onClick={(e) => {
+                testingAdminGet();
+              }}
+            >
+              click me to test admin
+            </button>
+          )}
+        <p id="adminTestResponse"></p>
+      </div>
       {!loggedIn && <LogIn onAdd={logInFunc} />}
       {!loggedIn && <SignUp onAdd={signUpFunc} />}
       {loggedIn && <LogOut onClick={logOutFunc} />}
