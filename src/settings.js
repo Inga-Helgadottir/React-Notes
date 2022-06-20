@@ -1,4 +1,6 @@
 export const loginUrl = "http://localhost:8080/Practise_war_exploded/api/login";
+export const signupUrl =
+  "http://localhost:8080/Practise_war_exploded/api/signup";
 export const createUrl =
   "http://localhost:8080/Practise_war_exploded/api/myPath/create";
 export const readUrl =

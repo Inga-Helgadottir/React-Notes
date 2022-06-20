@@ -1,18 +1,165 @@
-import { useState } from "react";
-import "./App.css";
+import "./styles/App.css";
+import "./styles/nav.css";
+import "./styles/header.css";
+import { Outlet, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { loginUrl } from "./settings";
+import LogIn from "./Components/Login";
+import SignUp from "./Components/SignUp";
 
 function App() {
   const [getter, setGetter] = useState([2, 3, 4, 6, 78]);
-  const [hi, hihi] = useState(true);
+  const [showHide, setShowHide] = useState(false);
+  //this is for login
+  const [userName, setUserName] = useState("");
+  const [userRole, setUserRole] = useState("");
+  const [loggedIn, setLoggedIn] = useState("");
 
-  if (hi) {
-    getter.push(55);
-    setGetter([...getter, 222]);
-    console.log(getter);
-    hihi(false);
-    console.log(getter);
-  }
-  return <div className="App"></div>;
+  useEffect(() => {
+    if (loggedIn === "") {
+      let userNameLS = localStorage.getItem("userName");
+      let loggedInLS = localStorage.getItem("loggedIn");
+      let userRoleLS = JSON.parse(localStorage.getItem("userRole"));
+
+      setUserName(userNameLS);
+      setLoggedIn(loggedInLS);
+      setUserRole(userRoleLS);
+    }
+  });
+
+  const logInFunc = async (user) => {
+    const res = await fetch(loginUrl, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+
+    const data = await res.json();
+
+    if (data.code !== null && data.code !== "" && data.code !== undefined) {
+      alert(data.message);
+      setLoggedIn(false);
+    }
+
+    if (
+      data.username !== null &&
+      data.username !== "" &&
+      data.username !== undefined
+    ) {
+      setUserName(data.username);
+      if (
+        data.role1 !== null &&
+        data.role1 !== "" &&
+        data.role1 !== undefined
+      ) {
+        let roleArray = [data.role0, data.role1];
+        setUserRole(data.role0, data.role1);
+        localStorage.setItem("userRole", JSON.stringify(roleArray));
+      } else {
+        setUserRole(data.role0);
+        localStorage.setItem("userRole", data.role0);
+      }
+      setLoggedIn(true);
+      localStorage.setItem("userName", data.username);
+      localStorage.setItem("loggedIn", true);
+      checkAfterHalfAnHour(data.token);
+      localStorage.setItem("token", data.token);
+      window.location.reload();
+    }
+  };
+
+  const signUpFunc = async (user) => {
+    const res = await fetch(signUpUrl, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+
+    const data = await res.json();
+
+    if (data.code !== null && data.code !== "" && data.code !== undefined) {
+      alert(data.message);
+      setLoggedIn(false);
+    }
+
+    if (
+      data.username !== null &&
+      data.username !== "" &&
+      data.username !== undefined
+    ) {
+      setUserName(data.username);
+      setUserRole(data.role0);
+      let roleArray = [data.role0, data.role1];
+      setUserRole(data.role0, data.role1);
+      localStorage.setItem("userRole", JSON.stringify(roleArray));
+
+      setLoggedIn(true);
+      localStorage.setItem("userName", data.username);
+      localStorage.setItem("loggedIn", true);
+      checkAfterHalfAnHour(data.token);
+      localStorage.setItem("token", data.token);
+      window.location.reload();
+    }
+  };
+
+  const logOutFunc = async () => {
+    setLoggedIn(false);
+    setUserName("");
+    setUserRole("");
+    setCallLinkCheck(false);
+    localStorage.clear();
+    window.location.href = "/";
+  };
+
+  return (
+    <div className="App">
+      <header>
+        <h1>React notes</h1>
+        {loggedIn && <p>Welcome {userName}</p>}
+      </header>
+
+      <nav>
+        <Link to="/FetchCreate">Fetch create</Link>
+        <Link to="/FetchRead">Fetch read</Link>
+        <Link to="/FetchUpdate">Fetch update</Link>
+        <Link to="/FetchDelete">Fetch delete</Link>
+      </nav>
+      <Outlet />
+
+      {showHide && <p style={{ margin: "5px" }}>this is a show hide</p>}
+
+      <button
+        style={
+          showHide
+            ? {
+                backgroundColor: "red",
+                border: "solid 2px black",
+                margin: "10px 0",
+                padding: "5px",
+              }
+            : {
+                backgroundColor: "greenyellow",
+                border: "solid 2px green",
+                margin: "10px 0",
+                padding: "5px",
+              }
+        }
+        onClick={(e) => {
+          setShowHide(!showHide);
+        }}
+      >
+        {showHide ? "hide content" : "show content"}
+      </button>
+
+      {!loggedIn && <LogIn onAdd={logInFunc} />}
+      {!loggedIn && <SignUp onAdd={signUpFunc} />}
+      {loggedIn && <LogOut onClick={logOutFunc} />}
+    </div>
+  );
 }
 
 export default App;
