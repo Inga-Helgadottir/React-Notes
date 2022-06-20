@@ -165,7 +165,6 @@ function App() {
       </nav>
       <Outlet />
 
-      {showHide && <p style={{ margin: "5px" }}>this is a show hide</p>}
       <div
         style={{
           display: "flex",
@@ -196,6 +195,9 @@ function App() {
         >
           {showHide ? "hide content" : "show content"}
         </button>
+
+        {showHide && <p style={{ margin: "5px" }}>this is a show hide</p>}
+
         {userRole !== null &&
           userRole !== undefined &&
           userRole.includes("admin") && (
@@ -209,8 +211,11 @@ function App() {
           )}
         <p id="adminTestResponse"></p>
       </div>
+
       {!loggedIn && <LogIn onAdd={logInFunc} />}
+
       {!loggedIn && <SignUp onAdd={signUpFunc} />}
+
       {loggedIn && <LogOut onClick={logOutFunc} />}
     </div>
   );
