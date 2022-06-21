@@ -433,10 +433,14 @@ useEffect(() => {
   getStuff();
 }, []);
 
+const getListFromEndpoint = async () => {
+  // if you need to get something by id
 const getListFromEndpoint = async (id) => {
+
   const res = await fetch(urlFromSettings);
     // if you need to get something by id
   const res = await fetch(urlFromSettings + id);
+
   const data = await res.json();
   return data.drinks;
 };
@@ -444,7 +448,7 @@ const getListFromEndpoint = async (id) => {
 // then you map it in the render and best to send it to a component with the info
 {listOfStuff.length > 0 &&
   listOfStuff.map((element, index) => {
-    return <Stuff key={index} props={element} />;
+    return <StuffComponent key={index} props={element} />;
 })}
 ```
 
@@ -458,7 +462,7 @@ for an update you need a way to get the correct Entity to update
 
 - you can also have an input that takes a number and you update that
 
-other than that its mostly the same as create on the front-end with the form and function side, the only read difference is the method is PUT instead of POST
+other than that its mostly the same as create on the front-end with the form and function side, the only real difference is the method is PUT instead of POST
 
 ```javascript
 const updateFunc = async (newThing) => {
@@ -472,7 +476,7 @@ const updateFunc = async (newThing) => {
   const data = await res.json();
 };
 
-// you can also use the placeholder to show the current
+// you can also use the placeholder to show the current values
 <input placeholder={currentValue}>
 ```
 
