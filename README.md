@@ -501,3 +501,20 @@ const getSomeAdminThing = async () => {
   });
 }
 ```
+
+### Checking if the token has expired
+
+```javascript
+let token = localStorage.getItem("token");
+
+if (token !== null) {
+  if (isTokenExpired(token)) {
+    logOutFunc();
+  }
+}
+
+function isTokenExpired(token) {
+  const expiry = JSON.parse(atob(token.split(".")[1])).exp;
+  return Math.floor(new Date().getTime() / 1000) >= expiry;
+}
+```

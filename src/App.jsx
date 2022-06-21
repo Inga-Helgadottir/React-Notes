@@ -28,8 +28,10 @@ function App() {
       setUserRole(userRoleLS);
 
       let token = localStorage.getItem("token");
-      if (isTokenExpired(token)) {
-        logOutFunc();
+      if (token !== null) {
+        if (isTokenExpired(token)) {
+          logOutFunc();
+        }
       }
     }
   });
