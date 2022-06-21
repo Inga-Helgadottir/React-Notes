@@ -26,6 +26,8 @@
 
 [Fetch](#fetch)
 
+[Checking if token has expired](#checking-if-the-token-has-expired)
+
 # Background info
 
 .prettierignore - stops prettier from changing this readme file
