@@ -388,7 +388,10 @@ const onSubmit = (e) => {
     alert("Please enter a name");
     return;
   }
-  makeFunc(thing);
+
+  //then you call the make function ( if the function was send as a prop  put the name of the prop here instead of the makeFunc )
+  makeFunc({thing});
+
   // do this for all the elements
   setName("");
   // if its an array

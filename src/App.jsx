@@ -26,8 +26,18 @@ function App() {
       setUserName(userNameLS);
       setLoggedIn(loggedInLS);
       setUserRole(userRoleLS);
+
+      let token = localStorage.getItem("token");
+      if (isTokenExpired(token)) {
+        logOutFunc();
+      }
     }
   });
+
+  function isTokenExpired(token) {
+    const expiry = JSON.parse(atob(token.split(".")[1])).exp;
+    return Math.floor(new Date().getTime() / 1000) >= expiry;
+  }
 
   const testingAdminGet = async () => {
     let token = localStorage.getItem("token");
@@ -39,8 +49,8 @@ function App() {
       },
     });
     const data = await res.json();
-    console.log("data");
-    console.log(data);
+    // console.log("data");
+    // console.log(data);
     document.querySelector("#adminTestResponse").innerHTML =
       "did admin test work? : " + data.admin;
   };
