@@ -32,7 +32,7 @@
 
 .prettierignore - stops prettier from changing this readme file
 
-netlify.toml - to show all sites on netlify
+netlify.toml - to show all sites on netlify 
 
 # Write the following in the terminal at the begining of the project
 
@@ -295,6 +295,7 @@ useEffect(() => {
 ## Map
 
 ```javascript
+// always check if its empty first (someList.length > 0)
 {someList.length > 0 &&
     someList.map((element, index) => {
       // always put a key element on mapped objects
@@ -331,6 +332,7 @@ function checkAdult(age) {
     <div className="form-control"> 
       <!-- it is best to wrap input and label in a div, it makes it easier to make it pretty in css -->
         <label for="fname">First name:</label>
+        <!-- for in lable matches id and name in input -->
         <input type="text" id="fname" name="fname" placeholder="what it should say if empty"> 
     </div>
 </form>
@@ -376,6 +378,12 @@ const makeFunc = async (newThing) => {
     body: JSON.stringify(newThing),
   });
   const data = await res.json();
+  
+  if(data !== null){
+    alert("it worked");
+  }else{
+    alert("something went wrong");
+  }
 };
 
 const onSubmit = (e) => {
