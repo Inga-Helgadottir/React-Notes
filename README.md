@@ -1,6 +1,8 @@
 ### What is where ?
 
-[Starting the project](#write-the-following-in-the-terminal-at-the-begining-of-the-project)
+[Background info](#background-info)
+
+[How to create a React project](#how-to-create-a-react-project)
 
 [Font awesome icons](#font-awesome-icons)
 
@@ -26,13 +28,51 @@
 
 [Checking if token has expired](#checking-if-the-token-has-expired)
 
-# Write the following in the terminal at the begining of the project
+# Background info
 
-npm i - to install everything in package.json
+For this to work you have to have node installed
 
-npm run dev - to start the project on localhost
+To check write the following in the terminal:
+
+node -v
+
+As long as the response is a v and some numbers, you are good if you get anything else visit this website to download Node: https://nodejs.org/en/download
+
+# How to create a React project
+
+npm create vite@latest my-react-app -- --template react
+<p style="font-style:italic; color:green;">Creates the React app, if it asks you to install some packages just write y</p>
+<p style="font-style:italic; color:green;">It will ask you which Linter to use, both are fine but I usually use ESLint</p>
+<p style="font-style:italic; color:green;">It will ask you if you want to install everything and start the project, you can write y</p>
+
+<br/>
+
+<p style="font-style:italic; color:green;">If you don't get the option to or accidentally choose no, you need to write</p>
+npm install 
+<p style="font-style:italic; color:green;">Installs everything in package.json</p>
+
+
+## Good to know
+
+Writing the following in the terminal opened from the project folder
+
+Code .
+<p style="font-style:italic; color:green; margin:0; padding:0;">will open the folder in Visual Studio Code</p>
+
+<br/>
+
+npm run dev 
+<p style="font-style:italic; color:green; margin:0; padding:0;">will start the project on localhost</p>
+
+<br/>
 
 ctrl + c - to stop the project
+<p style="font-style:italic; color:green; margin:0; padding:0;">will stop the project if it's running</p>
+
+---
+
+<br/>
+<br/>
 
 # How to install different things
 
