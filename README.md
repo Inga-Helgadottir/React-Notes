@@ -1,7 +1,5 @@
 ### What is where ?
 
-[Background info](#background-info)
-
 [Starting the project](#write-the-following-in-the-terminal-at-the-begining-of-the-project)
 
 [Font awesome icons](#font-awesome-icons)
@@ -27,12 +25,6 @@
 [Fetch](#fetch)
 
 [Checking if token has expired](#checking-if-the-token-has-expired)
-
-# Background info
-
-.prettierignore - stops prettier from changing this readme file
-
-netlify.toml - to show all sites on netlify
 
 # Write the following in the terminal at the begining of the project
 
