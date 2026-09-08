@@ -32,7 +32,7 @@
 
 .prettierignore - stops prettier from changing this readme file
 
-netlify.toml - to show all sites on netlify 
+netlify.toml - to show all sites on netlify
 
 # Write the following in the terminal at the begining of the project
 
@@ -46,7 +46,7 @@ ctrl + c - to stop the project
 
 ## Font awesome icons
 
-npm i --save @fortawesome/fontawesome-svg-core 
+npm i --save @fortawesome/fontawesome-svg-core
 
 npm i --save @fortawesome/free-solid-svg-icons
 
@@ -57,7 +57,7 @@ npm i --save @fortawesome/react-fontawesome
 ```javascript
 import { FaAngleUp } from "react-icons/fa";
 
-<FaAngleDown />
+<FaAngleDown />;
 ```
 
 #### Some of the options
@@ -71,7 +71,6 @@ import { FaAngleUp } from "react-icons/fa";
 
 link to a million other options : https://react-icons.github.io/react-icons/
 
-
 ## Loading icons
 
 npm i react-loading-icons
@@ -81,16 +80,16 @@ npm i react-loading-icons
 ```javascript
 import LoadingIcons from "react-loading-icons";
 
-<LoadingIcons.ThreeDots className="loading"/>
+<LoadingIcons.ThreeDots className="loading" />;
 
 // to show the loading icon when your function is trying to fetch and hide it when the fetch has completed
 const fetchFunction = async () => {
-    document.querySelector(".loading").style.display = "block";
-    const res = await fetch(Url);
-    const data = await res.json();
-    document.querySelector(".loading").style.display = "none";
-    return data;
-  };
+  document.querySelector(".loading").style.display = "block";
+  const res = await fetch(Url);
+  const data = await res.json();
+  document.querySelector(".loading").style.display = "none";
+  return data;
+};
 ```
 
 #### Options
@@ -141,7 +140,7 @@ ComponentName.propTypes = {
   // An object taking on a particular shape
   optionalObjectWithShape: PropTypes.shape({
     color: PropTypes.string,
-    fontSize: PropTypes.number
+    fontSize: PropTypes.number,
   }),
 
   // You can chain any of the above with `isRequired` to make sure a warning
@@ -150,10 +149,10 @@ ComponentName.propTypes = {
 
   // A required value of any data type
   requiredAny: PropTypes.any.isRequired,
-}
+};
 ```
 
-***
+---
 
 ## Routes
 
@@ -165,7 +164,7 @@ npm i react-router-dom
 // this goes in the main.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// this goes inside the render 
+// this goes inside the render
 // the app route goes around all others, that way everything on the App component gets shown no matter what site you are on
 <BrowserRouter>
     <Routes>
@@ -192,19 +191,19 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 //this goes in the App.jsx
 import { Outlet, Link } from "react-router-dom";
 
-//this goes inside the render 
+//this goes inside the render
 <nav>
     <Link to="/site">
-        Site 
+        Site
     </Link>
     <Link to="/anotherSite">
-        Another site 
+        Another site
     </Link>
 </nav>
 <Outlet />
 ```
 
-***
+---
 
 ## UseState
 
@@ -213,9 +212,9 @@ import { useState } from "react";
 
 // the following should be the first thing in a component
 const [getter, setter] = useState(false);
-const [getter, setter] = useState([]); 
-const [getter, setter] = useState(""); 
-const [getter, setter] = useState({}); 
+const [getter, setter] = useState([]);
+const [getter, setter] = useState("");
+const [getter, setter] = useState({});
 
 // above render and below useStates
 setter(set the value here)
@@ -228,15 +227,16 @@ getter.push(new value)
 
 // this is for show hide (only works with a boolean)
 <button onClick={(e) => {
-    setter(!getter); 
+    setter(!getter);
 }}>button name</button>
 ```
 
-***
+---
+
 ## UseEffect
 
 ```javascript
-import { useState, useEffect } from "react";// if you use both
+import { useState, useEffect } from "react"; // if you use both
 import { useEffect } from "react"; // if you only use useEffect
 
 /* useEffect goes right under the useStates
@@ -263,7 +263,7 @@ useEffect(() => {
 }, [prop, state]);
 ```
 
-***
+---
 
 ## If else
 
@@ -291,20 +291,23 @@ useEffect(() => {
 )}
 ```
 
-***
+---
+
 ## Map
 
 ```javascript
 // always check if its empty first (someList.length > 0)
-{someList.length > 0 &&
+{
+  someList.length > 0 &&
     someList.map((element, index) => {
       // always put a key element on mapped objects
-        return <SingleItemInListComponent key={index} props={element} />;
-    })
+      return <SingleItemInListComponent key={index} props={element} />;
+    });
 }
 ```
 
-***
+---
+
 ## Filter
 
 ```javascript
@@ -324,34 +327,40 @@ function checkAdult(age) {
 }
 ```
 
-***
+---
+
 ## Forms
 
 ```html
-<form onSubmit={onSubmitFunction}>
-    <div className="form-control"> 
-      <!-- it is best to wrap input and label in a div, it makes it easier to make it pretty in css -->
-        <label for="fname">First name:</label>
-        <!-- for in lable matches id and name in input -->
-        <input type="text" id="fname" name="fname" placeholder="what it should say if empty"> 
-    </div>
+<form onSubmit="{onSubmitFunction}">
+  <div className="form-control">
+    <!-- it is best to wrap input and label in a div, it makes it easier to make it pretty in css -->
+    <label for="fname">First name:</label>
+    <!-- for in lable matches id and name in input -->
+    <input
+      type="text"
+      id="fname"
+      name="fname"
+      placeholder="what it should say if empty"
+    />
+  </div>
 </form>
 ```
 
 ### Most important input types
 
 ```html
-<input type="text"> 
-<input type="password"> 
-<input type="number"> 
-<input type="button">
-<input type="checkbox">
-<input type="date">
-<input type="datetime-local">
-<input type="email">
-<input type="hidden">
-<input type="radio">
-<input type="submit">
+<input type="text" />
+<input type="password" />
+<input type="number" />
+<input type="button" />
+<input type="checkbox" />
+<input type="date" />
+<input type="datetime-local" />
+<input type="email" />
+<input type="hidden" />
+<input type="radio" />
+<input type="submit" />
 
 <textarea name="message" rows="10" cols="30"></textarea>
 
@@ -361,7 +370,8 @@ function checkAdult(age) {
 </select>
 ```
 
-***
+---
+
 ## FETCH
 
 ### Create
@@ -378,10 +388,10 @@ const makeFunc = async (newThing) => {
     body: JSON.stringify(newThing),
   });
   const data = await res.json();
-  
-  if(data !== null){
+
+  if (data !== null) {
     alert("it worked");
-  }else{
+  } else {
     alert("something went wrong");
   }
 };
@@ -390,7 +400,7 @@ const onSubmit = (e) => {
   e.preventDefault();
   let thing = {
     // here you put the names of all the useState elementslike this
-    name, 
+    name,
     otherElement,
   };
   // make one of these for all elements that should not be null
@@ -400,7 +410,7 @@ const onSubmit = (e) => {
   }
 
   //then you call the make function ( if the function was send as a prop  put the name of the prop here instead of the makeFunc )
-  makeFunc({thing});
+  makeFunc({ thing });
 
   // do this for all the elements
   setName("");
@@ -418,10 +428,10 @@ const onSubmit = (e) => {
     // each input should have an onChange like this
     onChange={(e) => setName(e.target.value)}
   ></input>
-  // the submit button has to be an input with the type submit
-  // the value is the text inside the button
+  // the submit button has to be an input with the type submit // the value is
+  the text inside the button
   <input type="submit" value="Make your thing" />
-</form>
+</form>;
 ```
 
 ### Read
@@ -495,7 +505,7 @@ here you also need a way to get the id, you have the same options as update
 ```javascript
 const deleteFunc = async (id) => {
   await fetch(deleteThingUrl + id, {
-      method: "DELETE",
+    method: "DELETE",
   });
 };
 ```
@@ -513,7 +523,7 @@ const getSomeAdminThing = async () => {
       "x-access-token": token,
     },
   });
-}
+};
 ```
 
 ### Checking if the token has expired

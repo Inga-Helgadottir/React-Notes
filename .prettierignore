@@ -1,2 +1,0 @@
-# Ignore all md files: (this stops prettier from changing my README.md file)
-*.md
